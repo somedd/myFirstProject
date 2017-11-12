@@ -17,22 +17,30 @@ bgImage.src = "http://lazyfoo.net/tutorials/SDL/13_alpha_blending/alpha000.png";
 //keyboard start
 var rightPressed = false;
 var leftPressed = false;
+var upPressed = false;
+var downPressed = false;
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 function keyDownHandler(e) {
     if(e.keyCode == 39) {
         rightPressed = true;
-    }
-    else if(e.keyCode == 37) {
+    } else if(e.keyCode == 37) {
         leftPressed = true;
+    } else if(e.keyCode == 40) {
+        downPressed = true;
+    } else if(e.keyCode == 38) {
+        upPressed = true;
     }
 }
 function keyUpHandler(e) {
     if(e.keyCode == 39) {
         rightPressed = false;
-    }
-    else if(e.keyCode == 37) {
+    } else if(e.keyCode == 37) {
         leftPressed = false;
+    } else if(e.keycode == 40) {
+        upPressed = false;
+    } else if(e.keyCode == 38) {
+        downPressed = false;
     }
 }
 //keyboard end
@@ -47,9 +55,24 @@ var snake = {
       this.dx = x;
       this.dy = y;
   },
-  move : function() {
-    this.x += this.dx;
-    this.y += this.dy;
+  move: function() {
+    if (rightPressed) {
+      if (this.x < 640) {
+        this.x += 9;
+      }
+    } else if (leftPressed) {
+      if (this.x > 0) {
+        this.x -= 9;
+      }
+    }else if (downPressed) {
+      if (this.y < 480) {
+        this.y += 9;
+      }
+    } else if (upPressed) {
+      if (this.y > 0) {
+        this.y -= 9;
+      }
+    }
   },
   check : function() {
 
@@ -65,7 +88,7 @@ ctx.drawSnake = function() {
 };
 //snake end
 //main start
-snake.setSpeed(5,0);
+// snake.setSpeed(5,0);
 var drawAll = function() {
   if(bgload) {
     drawBackground();
